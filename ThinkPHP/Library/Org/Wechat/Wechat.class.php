@@ -278,6 +278,7 @@ class Wechat
 	 */
 	public function valid($return=false)
     {
+    	error_log("enter valid");
         $encryptStr="";
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $postStr = file_get_contents("php://input");
