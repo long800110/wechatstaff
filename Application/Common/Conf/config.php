@@ -19,7 +19,7 @@ return array(
  	'DB_PORT'  => 10033,// 数据库端口
  	
  	
- 	'APP_DEBUG'     =>  true,// 开启调试模式
+ 	'APP_DEBUG'     =>  false,// 开启调试模式
  	
  	
  	'TMPL_PARSE_STRING' => array(
