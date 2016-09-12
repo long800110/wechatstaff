@@ -151,13 +151,6 @@ CREATE TABLE tb_rel_floor_seat(
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
 
 
--- 楼层与工位关联 
-CREATE TABLE tb_rel_floor_seat(
-	id int not null AUTO_INCREMENT,	
-	floor_id INT NOT NULL,
-	seat_id INT NOT NULL,
-	PRIMARY KEY (id)
-) ENGINE = INNODB DEFAULT CHARSET=utf8;
 
 -- 二维码与该二维码的扫描目标关联表，这个目标是系统支持的各种对象，可能是一个工位，也可能是一次培训或志愿者活动，取决于function的定义
 -- 这样的设计主要是考虑到整个系统功能模块的扩展
@@ -196,7 +189,7 @@ where a.id = b.seat_id and c.id=b.floor_id and c.id = d.floor_id and e.id = d.bu
 -- 绑定座位和二维码
 
 create view vw_seat_qrcode as
-select a.*, b.qrcode_id as qrcode_id from vw_building_floor_seat a left join tb_rel_qrcode_target b on a.seat_id = b.target_id
+select a.*, b.qrcode_id as qrcode_id from vw_building_floor_seat a left join tb_rel_qrcode_target b on a.seat_id = b.target_id;
 
 
 -- 用户-二维码授权视图，判断该用户open_id是不是被授权访问该二维码 
@@ -204,7 +197,7 @@ CREATE VIEW vw_auth_user_qrcode AS
 select a.open_id as auth_open_id, a.pwid as auth_pwid, g.qrcode_id as auth_qrcode_id from tb_rel_user_staff a, tb_staff b, tb_rel_staff_role c, 
 tb_role d, tb_rel_role_function e, tb_function f, tb_rel_qrcode_function g
 where a.pwid = b.pwid and b.id = c.staff_id and c.role_id = d.id and d.id = e.role_id 
-and e.function_id = f.id and f.id = g.function_id 
+and e.function_id = f.id and f.id = g.function_id;
 
 
 -- 测试数据
@@ -228,7 +221,10 @@ INSERT INTO tb_role (role_cd, description) VALUES ('ROLE_BOA_SYS_ADMIN', 'Back O
 
 -- staff-role
 INSERT INTO tb_rel_staff_role (staff_id, role_id) VALUES (1, 1);
-INSERT INTO tb_rel_staff_role (staff_id, role_id) VALUES (2, 2);
+INSERT INTO tb_rel_staff_role (staff_id, role_id) VALUES (2, 1);
+INSERT INTO tb_rel_staff_role (staff_id, role_id) VALUES (3, 1);
+INSERT INTO tb_rel_staff_role (staff_id, role_id) VALUES (4, 1);
+
 
 -- function
 
@@ -241,11 +237,11 @@ INSERT INTO tb_rel_role_function (role_id, function_id) VALUES (1, 2);
 INSERT INTO tb_rel_role_function (role_id, function_id) VALUES (2, 2);
 
 -- qrcode
-INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result) VALUES (1, 'QR_LIMIT_SCENE', 'gQHv8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL3IwVFMyVXJsN1EyVTJJd0FFMmhhAAIEatvSVwMEAAAAAA==', 'http://weixin.qq.com/q/r0TS2Url7Q2U2IwAE2ha');
-INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result) VALUES (2, 'QR_LIMIT_SCENE', 'gQFr8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0IwUzFjQjdsbWczampTUzVkR2hhAAIEtdzSVwMEAAAAAA==', 'http://weixin.qq.com/q/B0S1cB7lmg3jjSS5dGha');
-INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result) VALUES (3, 'QR_LIMIT_SCENE', 'gQHm8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL3NVU0NEQVBsdEEzTldwTGNRMmhhAAIECt3SVwMEAAAAAA==', 'http://weixin.qq.com/q/sUSCDAPltA3NWpLcQ2ha');
-INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result) VALUES (4, 'QR_LIMIT_SCENE', 'gQEe8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL05FU3laSjNsbnczbUtSZXZjMmhhAAIEbN3SVwMEAAAAAA==', 'http://weixin.qq.com/q/NESyZJ3lnw3mKRevc2ha');
-INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result) VALUES (5, 'QR_LIMIT_SCENE', 'gQE_8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL29rU3RWTmpsaXczeXlvR1ViR2hhAAIErN3SVwMEAAAAAA==', 'http://weixin.qq.com/q/okStVNjliw3yyoGUbGha');
+INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result, scan_limit) VALUES (1, 'QR_LIMIT_SCENE', 'gQHv8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL3IwVFMyVXJsN1EyVTJJd0FFMmhhAAIEatvSVwMEAAAAAA==', 'http://weixin.qq.com/q/r0TS2Url7Q2U2IwAE2ha','ONE_TIME_ONE_DAY');
+INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result, scan_limit) VALUES (2, 'QR_LIMIT_SCENE', 'gQFr8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0IwUzFjQjdsbWczampTUzVkR2hhAAIEtdzSVwMEAAAAAA==', 'http://weixin.qq.com/q/B0S1cB7lmg3jjSS5dGha','ONE_TIME_ONE_DAY');
+INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result, scan_limit) VALUES (3, 'QR_LIMIT_SCENE', 'gQHm8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL3NVU0NEQVBsdEEzTldwTGNRMmhhAAIECt3SVwMEAAAAAA==', 'http://weixin.qq.com/q/sUSCDAPltA3NWpLcQ2ha','ONE_TIME_ONE_DAY');
+INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result, scan_limit) VALUES (4, 'QR_LIMIT_SCENE', 'gQEe8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL05FU3laSjNsbnczbUtSZXZjMmhhAAIEbN3SVwMEAAAAAA==', 'http://weixin.qq.com/q/NESyZJ3lnw3mKRevc2ha','ONE_TIME_ONE_DAY');
+INSERT INTO tb_qrcode (scene_id, action_name, ticket, scan_result, scan_limit) VALUES (5, 'QR_LIMIT_SCENE', 'gQE_8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL29rU3RWTmpsaXczeXlvR1ViR2hhAAIErN3SVwMEAAAAAA==', 'http://weixin.qq.com/q/okStVNjliw3yyoGUbGha','ONE_TIME_ONE_DAY');
 
 -- qrcode-function
 
