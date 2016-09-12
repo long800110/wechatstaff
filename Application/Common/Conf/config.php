@@ -12,11 +12,11 @@ return array(
 // 	'DB_PWD'  => 'root',// 数据库密码
 // 	'DB_PORT'  => '3306',// 数据库端口
  	//For Sae
- 	'DB_HOST'  => SAE_MYSQL_HOST_M,// 数据库服务器地址
- 	'DB_NAME'  => SAE_MYSQL_DB,// 数据库名称
- 	'DB_USER'  => SAE_MYSQL_USER,// 数据库用户名
- 	'DB_PWD'  => SAE_MYSQL_PASS,// 数据库密码
- 	'DB_PORT'  => SAE_MYSQL_PORT,// 数据库端口
+ 	'DB_HOST'  => 'pwpqcmewfhlq.rds.sae.sina.com.cn',// 数据库服务器地址
+ 	'DB_NAME'  => 'wechat_staff',// 数据库名称
+ 	'DB_USER'  => 'staff_admin',// 数据库用户名
+ 	'DB_PWD'  => 'password',// 数据库密码
+ 	'DB_PORT'  => 10033,// 数据库端口
  	
  	
  	'APP_DEBUG'     =>  false,// 开启调试模式
