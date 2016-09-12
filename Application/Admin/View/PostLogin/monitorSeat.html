@@ -1,0 +1,164 @@
+<extend name="base" />
+<block name="nav"><a href="listSeat">List Seat</a></block>
+<block name="content">
+<div class="row">
+
+	<div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-search"></i></h2>
+                <div class="box-icon">                 
+                    <a href="" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-search"></i></a>
+                    
+                </div>
+            </div>
+            <div class="box-content">
+            	<div class="control-group col-md-4">
+                    <label class="control-label" for="building">Building</label>
+                    <div class="controls">
+                        <select id="building" data-rel="chosen">
+                            <option>Please Selete Building</option>
+                            <option>MSD</option>
+                            <option>B2</option>
+                            <option>ABP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group col-md-4">
+                    <label class="control-label" for="floor">Floor</label>
+                    <div class="controls">
+                        <select id="floor" data-rel="chosen">
+                            <option>Please Selete Floor</option>
+                            <option>MSD-F27</option>
+                            <option>MSD-F28</option>
+                            <option>MSD-F29</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                	<label class="control-label" for="sdate">Monitor Date</label>
+	            	<div class="input-group date-picker col-md-2 right" id="sdate" data-date="2016-09-10" data-date-format="yyyy-mm-dd">
+	  					<input id="scanDate" type="text" class="form-control" size="16" value="" readonly="readonly" placeholder="">
+	  					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+					</div>
+				</div>
+			
+				
+            </div>
+        </div>
+    </div>
+            
+
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-user"></i>Seat Monitor</h2>
+
+                <div class="box-icon">                 
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round btn-default"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <ul class="thumbnails">
+                <volist name="list" id="vo">
+	                <if condition="$vo['cnt'] gt 0 ">
+	                	<li class="thumbnail cust-thumbnail">
+	                		<div  class="seat-monitor s-booked" data-qrcode-id="{$vo['qrcode_id']}" data-scan-date="{$vo['scan_date']}">
+	                		<label>{$vo['seat_name']}</label>
+	                		<i class="glyphicon glyphicon-user"></i>
+                		</div>
+                		</li>
+					<else />
+						<li class="thumbnail">
+	                		<div  class="seat-monitor s-non-book">
+	                		<label>{$vo['seat_name']}</label>
+	                		<i class="glyphicon glyphicon-ban-circle"></i>
+                		</div>
+                	</li>		
+					</if>    
+                </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-offset-8 col-md-4">
+    	<a class="btn btn-success export-file" href="#" id="exportExcel" data-file-type="EXCEL">
+    		<i class="glyphicon glyphicon-download-alt icon-white"></i>Export Excel
+		</a>
+		<!-- 
+		<a class="btn btn-danger export-file" href="#" id="exportPDF" data-file-type="PDF">
+    		<i class="glyphicon glyphicon-download-alt icon-white"></i>Export PDF
+		</a>
+		 -->
+    </div>
+</div><!--/row-->
+</block>
+<block name="customer_script">
+<script>
+	$(function(){
+
+		var nowStr = moment().format("YYYY-MM-DD");
+		
+		$("#scanDate").val(nowStr);
+		$("#sdate").data("date", nowStr);
+		$("#sdate").datepicker({
+			endDate: new Date(),
+            format: "yyyy-mm-dd"
+		})
+		.on('changeDate',function(ev){
+			  var theTime = ev.date.valueOf();
+			  var nowStr = moment(theTime).format("YYYY-MM-DD");
+			  $("#scanDate").val(nowStr);
+		});
+	});
+	$(".seat-monitor.s-booked").click(function(e){
+		var qrcodeId = $(this).data("qrcodeId");
+		var scanDate = $(this).data("scanDate");
+		var $self = $(this);
+		$.post("getStaffInfo", {
+ 	          'qrcodeId' : qrcodeId,
+ 	          'scanDate' : scanDate
+ 	        }, function(jsonData) {
+ 	        	var data = eval(jsonData);
+ 	        	var content = "<hr>";
+ 	        	var info = data.info;
+ 	        	for(key in info){
+ 	        		value = info[key];
+ 	        		content += "<p class='cust-tooltip'>PWID: " + value.pwid + "</p>";
+ 	        		content += "<p class='cust-tooltip'>Name: " + value.name + "</p>";
+ 	        		content += "<p class='cust-tooltip'>Department: " + value.department + "</p>";
+ 	        		content += "<p class='cust-tooltip'>Cost Centre: " + value.cost_centre + "</p>"; 
+ 	        		content += "<hr>";
+ 	        	}
+ 	        	$self.data("toggle", "tooltip");
+ 	        	$self.data("title", content);
+ 	        	$self.data("html", true);
+ 	        	$self.data("placement", "bottom");
+ 	        	$self.tooltip('show');
+ 	        	
+ 	        	
+ 	        });
+	});
+	$(".export-file").click(function(e){
+		var self = $(this);
+		var fileType = self.data("fileType");
+		var scanDate = $("#scanDate").val();
+		/*  this is a mock data so far, Yuanlong*/
+		var floorId = 2;
+		window.location.href = "exportSeatMonitorReport?fileType="+fileType+"&scanDate=" + scanDate + "&floorId=" + floorId;
+		/* $.post("exportSeatMonitorReport", {
+	          'fileType' : fileType,
+	          'scanDate' : scanDate,
+	          'floorId' : floorId
+	        },
+        function(jsonData) {
+        	var data = eval(jsonData);
+        }); */
+	});
+	
+</script>
+</block>

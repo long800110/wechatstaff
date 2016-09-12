@@ -1,0 +1,68 @@
+.navbar-brand img{
+	height: 30px;
+    width: 120px;
+}
+
+.img-in-td{
+	height: 30px;
+    width: 30px;
+}
+
+table.table td.center {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.modal-content-center {
+	text-align: center;
+	
+}
+.text-normal {
+	text-align: left;
+}
+.no-padding {	
+	padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.seat-monitor {
+	width: 75px;
+    height: 75px;
+    padding: 3px;
+}
+
+
+
+.seat-monitor > i {	
+	position: absolute;
+    top: 40px;
+    right: 10px;
+    font-size: 30px;    
+}
+.seat-monitor.s-booked {
+    background-color: #dff0d8;
+    cursor: pointer;
+
+}
+.seat-monitor.s-booked > label, .seat-monitor.s-booked > i{
+    color: #458746
+}
+
+.seat-monitor.s-non-book {
+    background-color: #f2dede;
+
+}
+.seat-monitor.s-non-book > label, .seat-monitor.s-non-book > i{
+    color: #B94846
+}
+
+.cust-tooltip {
+	padding-top: 2px;
+	padding-left: 2px;
+	padding-top: -2px;
+	text-align: left;
+	width: 300px;
+}
+.tooltip {
+	z-index: 5 !important;
+}

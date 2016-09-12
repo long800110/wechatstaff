@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        ===
+        This comment should NOT be removed.
+
+        Charisma v2.0.0
+
+        Copyright 2012-2014 Muhammad Usman
+        Licensed under the Apache License v2.0
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        http://usman.it
+        http://twitter.com/halalit_usman
+        ===
+    -->
+    <meta charset="utf-8">
+    
+    <block name="title"><title>Back Office</title></block>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    <link href="__CSS__/bootstrap-cerulean.min.css" rel="stylesheet">
+
+    <link href="__CSS__/charisma-app.css" rel="stylesheet">
+    <link href="__BOWER__/fullcalendar/dist/fullcalendar.css" rel='stylesheet'>
+    <link href="__BOWER__/fullcalendar/dist/fullcalendar.print.css" rel='stylesheet' media='print'>
+    <link href="__BOWER__/chosen/chosen.min.css" rel='stylesheet'>
+    <link href="__BOWER__/colorbox/example3/colorbox.css" rel='stylesheet'>
+    <link href="__BOWER__/responsive-tables/responsive-tables.css" rel='stylesheet'>
+    <link href="__BOWER__/bootstrap-tour/build/css/bootstrap-tour.min.css" rel='stylesheet'>
+    <link href="__CSS__/jquery.noty.css" rel='stylesheet'>
+    <link href="__CSS__/noty_theme_default.css" rel='stylesheet'>
+    <link href="__CSS__/elfinder.min.css" rel='stylesheet'>
+    <link href="__CSS__/elfinder.theme.css" rel='stylesheet'>
+    <link href="__CSS__/jquery.iphone.toggle.css" rel='stylesheet'>
+    <link href="__CSS__/uploadify.css" rel='stylesheet'>
+    <link href="__CSS__/animate.min.css" rel='stylesheet'>
+    <link href="__CSS__/datepicker.css" rel='stylesheet'>
+    <link href="__CSS__/customer.css" rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="__BOWER__/jquery/jquery.min.js"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="__IMAGE__/customer/favicon.png">
+
+</head>
+<body>
+    <!-- topbar starts -->
+    <div class="navbar navbar-default" role="navigation">
+
+        <div class="navbar-inner">
+            <button type="button" class="navbar-toggle pull-left animated flip">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"> <img alt="" src="__IMAGE__/customer/scblogo.svg" class="hidden-xs"/>
+                </a>
+
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> admin</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </div>
+            <!-- user dropdown ends -->
+
+            <ul class="collapse navbar-collapse nav navbar-nav top-menu">
+            
+            </ul>
+
+        </div>
+    </div>
+    <!-- topbar ends -->
+<div class="ch-container">
+    <div class="row">
+        
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        <li class="nav-header">Main</li>
+                        <li><a class="ajax-link" href="dashboard"><i class="glyphicon glyphicon-home"></i><span> Dashboard</span></a>
+                        </li>
+                        
+                        <li class="nav-header hidden-md">System Managerment</li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-user"></i><span> Staff </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="listUser">List Wechat User</a></li>
+                                <li><a href="listStaff">List Staff</a></li>
+                            </ul>
+                        </li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-qrcode"></i><span> QR Code </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addQRCode">Add QR Code</a></li>
+                                <li><a href="listQRCode">List QR Code</a></li>
+                            </ul>
+                        </li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-user"></i><span> Role </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addRole">Add Role</a></li>
+                                <li><a href="listRole">List Role</a></li>
+                            </ul>
+                        </li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-folder-open"></i><span> Function </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addFunction">Add Function</a></li>
+                                <li><a href="listFunction">List Function</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-header hidden-md">Building Management</li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-home"></i><span> Building </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addBuilding">Add Building</a></li>
+                                <li><a href="listBuilding">List Building</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-header hidden-md">Floor Management</li>
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-road"></i><span> Floor </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addFloor">Add Floor</a></li>
+                                <li><a href="listFloor">List Floor</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-header hidden-md">Seat Management</li>
+                        
+                        <li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-map-marker"></i><span> Seat </span></a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="addSeat">Add Seat</a></li>
+                                <li><a href="listSeat">List Seat</a></li>
+                                <li><a href="monitorSeat">Monitor & Report</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        
+
+        <div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="dashboard">Home</a>
+        </li>
+        <li>
+            <block name="nav"><a href="dashboard">Dashboard</a></block>
+        </li>
+    </ul>
+</div>
+
+<block name="content">content</block>
+
+
+    <!-- content ends -->
+    </div><!--/#content.col-md-0-->
+</div><!--/fluid-row-->
+
+    <hr>
+<block name="modal">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Settings</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Here settings can be configured...</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">Save changes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+    <footer class="row">
+        <p class="col-md-9 col-sm-9 col-xs-12 copyright"></p>
+
+        <p class="col-md-3 col-sm-3 col-xs-12 powered-by">Powered by: <a
+                href="mailto:yuan-long.cui@sc.com">Yuanlong</a></p>
+    </footer>
+
+</div><!--/.fluid-container-->
+<body>
+
+
+<!-- external javascript -->
+
+<script src="__BOWER__/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- library for cookie management -->
+<script src="__JS__/jquery.cookie.js"></script>
+<!-- calender plugin -->
+<script src="__BOWER__/moment/min/moment.min.js"></script>
+<script src="__BOWER__/fullcalendar/dist/fullcalendar.min.js"></script>
+<!-- data table plugin -->
+<script src="__JS__/jquery.dataTables.min.js"></script>
+
+<!-- select or dropdown enhancer -->
+<script src="__BOWER__/chosen/chosen.jquery.min.js"></script>
+<!-- plugin for gallery image view -->
+<script src="__BOWER__/colorbox/jquery.colorbox-min.js"></script>
+<!-- notification plugin -->
+<script src="__JS__/jquery.noty.js"></script>
+<!-- library for making tables responsive -->
+<script src="__BOWER__/responsive-tables/responsive-tables.js"></script>
+<!-- tour plugin -->
+<script src="__BOWER__/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+<!-- star rating plugin -->
+<script src="__JS__/jquery.raty.min.js"></script>
+<!-- for iOS style toggle switch -->
+<script src="__JS__/jquery.iphone.toggle.js"></script>
+<!-- autogrowing textarea plugin -->
+<script src="__JS__/jquery.autogrow-textarea.js"></script>
+<!-- multiple file upload plugin -->
+<script src="__JS__/jquery.uploadify-3.1.min.js"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="__JS__/jquery.history.js"></script>
+<script src="__JS__/bootstrap-datepicker.js"></script>
+<script src="__JS__/moment.js"></script>
+<!-- application script for Charisma demo -->
+<script src="__JS__/charisma.js"></script>
+<block name="customer_script"></block>
+</body>
+</html>
