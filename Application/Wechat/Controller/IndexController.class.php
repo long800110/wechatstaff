@@ -14,18 +14,15 @@ class IndexController extends Controller {
 		'appsecret' => 'd313c34b1061d4acee6d8e048f6e8921',
 		);
 		$weObj = new TPWechat($options);
-		if (isset($_GET['echostr'])) {
-	    echo $_GET['echostr'];
-		}
 		$weObj->valid();
-		$type = $weObj->getRev()->getRevType();
-		switch ($type) {
-			case Wechat :: MSGTYPE_EVENT :
-				$this->handleEvent($weObj);
-				break;
-			default :
-				$weObj->text("The operation do not be support so far, more function, so stay tuned")->reply();
-		}
+//		$type = $weObj->getRev()->getRevType();
+//		switch ($type) {
+//			case Wechat :: MSGTYPE_EVENT :
+//				$this->handleEvent($weObj);
+//				break;
+//			default :
+//				$weObj->text("The operation do not be support so far, more function, so stay tuned")->reply();
+//		}
 	}
 	public function bind() {
 		$options = C("WECHAT_OPTIONS");
