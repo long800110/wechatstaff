@@ -3,7 +3,7 @@ namespace Wechat\Controller;
 use Think\Controller;
 use Org\Wechat\Thinkphp\TPWechat;
 //use Org\Wechat\Wechat;
-use Org\Wechat\wechat;
+use Org\Wechat;
 
 class IndexController extends Controller {
 	public function index() {
