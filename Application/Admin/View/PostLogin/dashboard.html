@@ -1,11 +1,54 @@
 <extend name="base" />
 <block name="nav"><a href="dashboard">Dashboard</a></block>
 <block name="content">
+<div class=" row">
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="3 new staff" class="well top-block" href="#">
+            <i class="glyphicon glyphicon-user blue"></i>
+
+            <div>Total Staff</div>
+            <div>10</div>
+            <span class="notification">3</span>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="1 new wechat user" class="well top-block" href="#">
+            <i class="glyphicon glyphicon-comment green"></i>
+
+            <div>Total Wechat User</div>
+            <div>1</div>
+            <span class="notification green">1</span>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#">
+            <i class="glyphicon glyphicon-qrcode yellow"></i>
+
+            <div>QR Codes</div>
+            <div>5</div>
+            <span class="notification yellow">5</span>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#">
+            <i class="glyphicon glyphicon-map-marker red"></i>
+
+            <div>Seat</div>
+            <div>10</div>
+            <!-- <span class="notification red">12</span> -->
+        </a>
+    </div>
+</div>
+
 <div class="row">
+
     <div class="box col-md-12">
         <div class="box-inner">
-            <div class="box-header well" data-original-title="">
-                <h2><i class="glyphicon glyphicon-star-empty"></i> Blank</h2>
+            <div class="box-header well">
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Chart with points</h2>
 
                 <div class="box-icon">
                     <a href="#" class="btn btn-setting btn-round btn-default"><i
@@ -17,9 +60,84 @@
                 </div>
             </div>
             <div class="box-content">
-                <!-- put your content here -->
+                <div id="sincos" class="center" style="height:300px"></div>
+               
             </div>
         </div>
     </div>
 </div><!--/row-->
+
+<div class="row">
+    <div class="box col-md-4">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Pie</h2>
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round btn-default"><i
+                            class="glyphicon glyphicon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round btn-default"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="piechart" style="height:300px"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box col-md-4">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Realtime</h2>
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round btn-default"><i
+                            class="glyphicon glyphicon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round btn-default"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="stackchart" style="height:300px;"></div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="box col-md-4">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Donut</h2>
+
+                <div class="box-icon">
+                    <a href="#" class="btn btn-setting btn-round btn-default"><i
+                            class="glyphicon glyphicon-cog"></i></a>
+                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                            class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a href="#" class="btn btn-close btn-round btn-default"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+            <div class="box-content">
+                <div id="donutchart" style="height: 300px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="customer_script">
+<!-- chart libraries start -->
+<script src="__ROOT__/Public/bower_components/flot/excanvas.min.js"></script>
+<script src="__ROOT__/Public/bower_components/flot/jquery.flot.js"></script>
+<script src="__ROOT__/Public/bower_components/flot/jquery.flot.pie.js"></script>
+<script src="__ROOT__/Public/bower_components/flot/jquery.flot.stack.js"></script>
+<script src="__ROOT__/Public/bower_components/flot/jquery.flot.resize.js"></script>
+<!-- chart libraries end -->
+<script src="__ROOT__/Public/js/init-chart.js"></script>
 </block>
