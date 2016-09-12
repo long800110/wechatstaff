@@ -19,6 +19,31 @@ class PostLoginController extends Controller {
 		$this->assign("list", $list);
 		$this->display();
 	}
+	public function listRole() {
+		$Dao = M("TbRole");
+		$list = $Dao->select();
+		$this->assign("list", $list);
+		$this->display();
+	}
+	public function listFunction() {
+		$Dao = M("TbFunction");
+		$list = $Dao->select();
+		$this->assign("list", $list);
+		$this->display();
+	}
+	public function listBuilding() {
+		$Dao = M("TbBuilding");
+		$list = $Dao->select();
+		$this->assign("list", $list);
+		$this->display();
+	}
+	public function listFloor() {
+		$Dao = M();
+		$sql = "select a.name as floor_name, a.description as floor_desc, a.status as floor_status, c.name as building_name from tb_floor a, tb_rel_building_floor b, tb_building c where a.id = b.floor_id and c.id = b.building_id";
+		$list = $Dao->query($sql);
+		$this->assign("list", $list);
+		$this->display();
+	}
 
 	public function listQRCode() {
 		$Dao = M("TbQrcode");

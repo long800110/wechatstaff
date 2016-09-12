@@ -76,3 +76,11 @@ table.table td.center {
     width: 110px;
 }
 
+.max-width-350 {
+	width: 350px;
+	max-width: 350px;
+}
+.max-width-400 {
+	width: 400px;
+	max-width: 400px;
+}
