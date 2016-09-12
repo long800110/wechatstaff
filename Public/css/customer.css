@@ -66,3 +66,13 @@ table.table td.center {
 .tooltip {
 	z-index: 5 !important;
 }
+
+.navbar-brand.cust{
+	padding: 5px 45px;
+}
+
+.navbar-brand.cust img{
+	height: 42px;
+    width: 110px;
+}
+
