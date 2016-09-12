@@ -7,7 +7,12 @@ use Org\Wechat\Wechat;
 
 class IndexController extends Controller {
 	public function index() {
-		$options = C("WECHAT_OPTIONS");
+//		$options = C("WECHAT_OPTIONS");
+		$options = array(
+		'token' => 'cuiyuanlongweixin',
+		'appid' => 'wx2389537b7e6f66c9',
+		'appsecret' => 'd313c34b1061d4acee6d8e048f6e8921',
+		);
 		$weObj = new TPWechat($options);
 		$weObj->valid();
 		$type = $weObj->getRev()->getRevType();
