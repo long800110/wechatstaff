@@ -14,6 +14,9 @@ class IndexController extends Controller {
 		'appsecret' => 'd313c34b1061d4acee6d8e048f6e8921',
 		);
 		$weObj = new TPWechat($options);
+		if (isset($_GET['echostr'])) {
+	    echo $_GET['echostr'];
+		}
 		$weObj->valid();
 		$type = $weObj->getRev()->getRevType();
 		switch ($type) {
