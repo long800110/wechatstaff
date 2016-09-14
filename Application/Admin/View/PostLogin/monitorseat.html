@@ -89,6 +89,9 @@
     	<a class="btn btn-success export-file" href="#" id="exportExcel" data-file-type="EXCEL">
     		<i class="glyphicon glyphicon-download-alt icon-white"></i>Export Excel
 		</a>
+		<a class="btn btn-success export-file" href="#" id="exportMonthExcel" data-file-type="EXCEL" data-date-type="month">
+    		<i class="glyphicon glyphicon-download-alt icon-white"></i>Export Monthly Report
+		</a>
 		<!-- 
 		<a class="btn btn-danger export-file" href="#" id="exportPDF" data-file-type="PDF">
     		<i class="glyphicon glyphicon-download-alt icon-white"></i>Export PDF
@@ -149,7 +152,11 @@
 		var scanDate = $("#scanDate").val();
 		/*  this is a mock data so far, Yuanlong*/
 		var floorId = 2;
-		window.location.href = "exportSeatMonitorReport?fileType="+fileType+"&scanDate=" + scanDate + "&floorId=" + floorId;
+		var url = "exportSeatMonitorReport?fileType="+fileType+"&scanDate=" + scanDate + "&floorId=" + floorId;
+		if(self.data("dateType") =="month"){
+			url += "&isMonth=1"
+		}
+		window.location.href = url;
 		/* $.post("exportSeatMonitorReport", {
 	          'fileType' : fileType,
 	          'scanDate' : scanDate,

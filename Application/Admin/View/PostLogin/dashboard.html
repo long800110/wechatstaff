@@ -3,22 +3,22 @@
 <block name="content">
 <div class=" row">
     <div class="col-md-3 col-sm-3 col-xs-6">
-        <a data-toggle="tooltip" title="3 new staff" class="well top-block" href="#">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#">
             <i class="glyphicon glyphicon-user blue"></i>
 
             <div>Total Staff</div>
-            <div>10</div>
-            <span class="notification">3 Staff Add</span>
+            <div>{$staffCount}</div>
+<!--             <span class="notification">3 Staff Add</span> -->
         </a>
     </div>
 
     <div class="col-md-3 col-sm-3 col-xs-6">
-        <a data-toggle="tooltip" title="1 new wechat user" class="well top-block" href="#">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#">
             <i class="glyphicon glyphicon-comment green"></i>
 
             <div>Total Wechat User</div>
-            <div>1</div>
-            <span class="notification green">1 User Add</span>
+            <div>{$userCount}</div>
+<!--             <span class="notification green">1 User Add</span> -->
         </a>
     </div>
 
@@ -27,8 +27,8 @@
             <i class="glyphicon glyphicon-qrcode yellow"></i>
 
             <div>QR Codes</div>
-            <div>5</div>
-            <span class="notification yellow">5 QR Code Add</span>
+            <div>{$qrcodeCount}</div>
+<!--             <span class="notification yellow">5 QR Code Add</span> -->
         </a>
     </div>
 
@@ -37,7 +37,7 @@
             <i class="glyphicon glyphicon-map-marker red"></i>
 
             <div>Seat</div>
-            <div>10</div>
+            <div><div>{$seatCount}</div></div>
             <!-- <span class="notification red">12</span> -->
         </a>
     </div>
@@ -48,7 +48,7 @@
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well">
-                <h2><i class="glyphicon glyphicon-list-alt"></i> Chart with points</h2>
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Seat Booking Realtime Monitor</h2>
 
                 <div class="box-icon">
                     <a href="#" class="btn btn-setting btn-round btn-default"><i
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="box-content">
-                <div id="sincos" class="center" style="height:300px"></div>
+                <div id="seatBookingMonitorChart" class="center" style="height:300px"></div>
                
             </div>
         </div>
@@ -71,7 +71,7 @@
     <div class="box col-md-4">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2><i class="glyphicon glyphicon-list-alt"></i> Pie</h2>
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Department Distribution</h2>
 
                 <div class="box-icon">
                     <a href="#" class="btn btn-setting btn-round btn-default"><i
@@ -83,15 +83,15 @@
                 </div>
             </div>
             <div class="box-content">
-                <div id="piechart" style="height:300px"></div>
+                <div id="departChart" style="height:300px"></div>
             </div>
         </div>
     </div>
 
-    <div class="box col-md-4">
+    <div class="box col-md-8">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2><i class="glyphicon glyphicon-list-alt"></i> Realtime</h2>
+                <h2><i class="glyphicon glyphicon-list-alt"></i> Seat Usage Rate</h2>
 
                 <div class="box-icon">
                     <a href="#" class="btn btn-setting btn-round btn-default"><i
@@ -103,29 +103,8 @@
                 </div>
             </div>
             <div class="box-content">
-                <div id="stackchart" style="height:300px;"></div>
+                <div id="seatUsageRate" style="height:300px;"></div>
                 
-            </div>
-        </div>
-    </div>
-
-    <div class="box col-md-4">
-        <div class="box-inner">
-            <div class="box-header well" data-original-title="">
-                <h2><i class="glyphicon glyphicon-list-alt"></i> Donut</h2>
-
-                <div class="box-icon">
-                    <a href="#" class="btn btn-setting btn-round btn-default"><i
-                            class="glyphicon glyphicon-cog"></i></a>
-                    <a href="#" class="btn btn-minimize btn-round btn-default"><i
-                            class="glyphicon glyphicon-chevron-up"></i></a>
-                    <a href="#" class="btn btn-close btn-round btn-default"><i
-                            class="glyphicon glyphicon-remove"></i></a>
-                </div>
-            </div>
-            <div class="box-content">
-                <div id="donutchart" style="height: 300px;">
-                </div>
             </div>
         </div>
     </div>
@@ -140,4 +119,197 @@
 <script src="__ROOT__/Public/bower_components/flot/jquery.flot.resize.js"></script>
 <!-- chart libraries end -->
 <script src="__ROOT__/Public/js/init-chart.js"></script>
+<script>
+if ($("#seatBookingMonitorChart").length) {
+	var timeData = [
+	                	[0, 2],
+	                	[1, 20],
+	                	[2, 33],
+	                	[3, 46],
+	                	[4, 72],
+	                	[5, 91],
+	                	[6, 113],
+	                	[7, 138],
+	                	[8, 120],
+	                	[9, 101],
+	                	[10, 90],
+	                	[11, 82],
+	                	[12, 69],
+	                	[13, 60],
+	                	[14, 52],
+	                	[15, 43],
+	                	[16, 22],
+	                	[17, 5],
+	                	[18, 1]
+	                ];
+	var d1 = [   
+              {  data: timeData ,color: '#abcdef' }
+          ];  
+  $.plot($("#seatBookingMonitorChart"), d1, {  
+         series: {  
+              bars: {  
+                  show: true  
+              }  
+          },  
+          bars: {  
+              align: "center",  
+              barWidth: 0.5  
+          },  
+          xaxis: {  
+              show: true,  
+              //position: 'left',  
+              //color: '#ccc',  
+              //tickColor: '#fff',  
+              ticks: [
+                      [0,'8：30'],
+                      [1,'9：00'], [2,'9：30'],
+                      [3,'10：00'],[4,'10：30'],
+                      [5,'11：00'],[6,'11：30'],
+                      [7,'12：00'],[8,'12：30'],
+                      [9,'13：00'],[10,'13：30'],
+                      [11,'14：00'],[12,'14：30'],
+                      [13,'15：00'],[14,'15：30'],
+                      [15,'16：00'],[16,'16：30'],
+                      [17,'17：00'],[18,'17：30'],
+                      ],  
+              tickSize: 2,  
+              axisLabelUseCanvas: true,  
+              axisLabelFontSizePixels: 12,  
+              axisLabelFontFamily: 'Verdana, Arial',  
+              axisLabelPadding: 10  
+
+          },  
+      });  
+}
+var data = [
+            { label: "CBSD", data: 15},
+            { label: "OTS", data: 60},
+            { label: "CA", data: 3},
+            { label: "SPSD", data: 8},
+            { label: "ASK HR", data: 16},
+            { label: "R&C", data: 13},
+            { label: "Property", data: 5},
+            { label: "TRADE", data: 45},
+            { label: "Finance", data: 13},
+            { label: "PSS", data: 28},
+            { label: "FCSU", data: 30},
+            { label: "IT", data: 2}
+        ];
+
+if ($("#departChart").length) {
+    $.plot($("#departChart"), data,
+        {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: true
+            },
+            legend: {
+                show: false
+            }
+        });
+
+    function pieHover(event, pos, obj) {
+        if (!obj)
+            return;
+        percent = parseFloat(obj.series.percent).toFixed(2);
+        $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+    }
+
+    $("#departChart").bind("plothover", pieHover);
+}
+
+if ($("#departChart").length) {
+    $.plot($("#departChart"), data,
+        {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: true
+            },
+            legend: {
+                show: false
+            }
+        });
+
+    function pieHover(event, pos, obj) {
+        if (!obj)
+            return;
+        percent = parseFloat(obj.series.percent).toFixed(2);
+        $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
+    }
+
+    $("#departChart").bind("plothover", pieHover);
+}
+if ($("#seatUsageRate").length) {
+	var fullData = [
+	                	[0, 45],
+	                	[1, 121],
+	                	[2, 163],
+	                	[3, 164],
+	                	[4, 240],
+	                	[5, 248],
+	                	[6, 248],
+	                	[7, 200],
+	                	[8, 201],
+	                	[9, 200]
+	                ];
+	var usedData = [
+                	[0, 20],
+                	[1, 78],
+                	[2, 132],
+                	[3, 124],
+                	[4, 198],
+                	[5, 223],
+                	[6, 214],
+                	[7, 167],
+                	[8, 182],
+                	[9, 145]
+                ];
+	var d1 = [   
+              {  data: fullData},
+              {  data: usedData}
+          ];  
+  $.plot($("#seatUsageRate"), d1, {  
+         series: {  
+              bars: {  
+                  show: true  
+              }  
+          },  
+          bars: {  
+              align: "center",  
+              barWidth: 0.5  
+          },  
+          xaxis: {  
+              show: true,  
+              //position: 'left',  
+              //color: '#ccc',  
+              //tickColor: '#fff',  
+              ticks: [
+                      [0,'B2 1F'],
+                      [1,'B2 2F'], [2,'B2 3F'],
+                      [3,'B2 4F'],[4,'MSD 27F'],
+                      [5,'MSD 28F'],[6,'MSD 29F'],
+                      [7,'ABP 3F'],[8,'ABP 4F'],
+                      [9,'ABP 5F']
+                      ],  
+              tickSize: 2,  
+              axisLabelUseCanvas: true,  
+              axisLabelFontSizePixels: 12,  
+              axisLabelFontFamily: 'Verdana, Arial',  
+              axisLabelPadding: 10  
+
+          },  
+      });  
+}
+
+</script>
 </block>

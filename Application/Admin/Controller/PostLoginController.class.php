@@ -3,8 +3,21 @@ namespace Admin\Controller;
 use Think\Controller;
 
 class PostLoginController extends Controller {
+	
 	public function dashboard() {
-		error_log(__ROOT__);
+		$Staff = M("TbStaff");
+		$staffCount = $Staff->count();
+		$this->assign("staffCount", $staffCount);
+		$UserStaff = M("VwUserStaff");
+		$userCount = $UserStaff->count();
+		$this->assign("userCount", $userCount);
+		$QRCode = M("TbQrcode");
+		$qrcodeCount = $QRCode->count();
+		$this->assign("qrcodeCount", $qrcodeCount);
+		$Seat= M("TbSeat");
+		$seatCount = $Seat->count();
+		$this->assign("seatCount", $seatCount);
+		
 		$this->display();
 	}
 	public function listStaff() {
@@ -74,7 +87,7 @@ class PostLoginController extends Controller {
 
 	public function monitorSeat() {
 		$Dao = M();
-		$list = $Dao->query("select a.*, b.cnt, scan_date from vw_seat_qrcode a left join (select qrcode_id, count(qrcode_id) as cnt, date(scan_date) scan_date from tb_scan_record where date(scan_date) = curdate() group by qrcode_id  ) b on a.qrcode_id = b. qrcode_id");
+		$list = $Dao->query("select a.*, b.cnt, scan_date from vw_seat_qrcode a left join (select qrcode_id, count(qrcode_id) as cnt, date(scan_date) scan_date from tb_scan_record where date(scan_date) = curdate() group by qrcode_id  ) b on a.qrcode_id = b. qrcode_id order by a.seat_id");
 		$this->assign("list", $list);
 		$this->display();
 	}
@@ -98,7 +111,19 @@ class PostLoginController extends Controller {
 		$fileType = I("fileType");
 		$scanDate = I("scanDate");
 		$floorId = I("floorId");
-		$sql = "select c.seat_name, c.building_name, c.floor_name, b.pwid, b.name, b.department, b.cost_centre, date(a.scan_date) as scandate from tb_scan_record a, tb_staff b, vw_seat_qrcode c where a.pwid = b.pwid and a.qrcode_id = c.qrcode_id and date(a.scan_date) = '$scanDate' and c.floor_id = $floorId order by c.seat_name";
+		$isMonth = I("isMonth");
+		if($isMonth == 1){
+			$reportTitle = "Seat Monitor Monthly Report";
+			$filename = "monthly_report";
+			$monthDate = substr($scanDate, 0 ,7);
+			$sql = "select c.seat_name, c.building_name, c.floor_name, b.pwid, b.name, b.department, b.cost_centre, date(a.scan_date) as scandate from tb_scan_record a, tb_staff b, vw_seat_qrcode c where a.pwid = b.pwid and a.qrcode_id = c.qrcode_id and date_format(a.scan_date,'%Y-%m') = '$monthDate' and c.floor_id = $floorId order by date(a.scan_date), c.seat_name";
+			
+		}else{
+			$reportTitle = "Seat Monitor Daily Report";
+			$filename = "daily_report";
+			$sql = "select c.seat_name, c.building_name, c.floor_name, b.pwid, b.name, b.department, b.cost_centre, date(a.scan_date) as scandate from tb_scan_record a, tb_staff b, vw_seat_qrcode c where a.pwid = b.pwid and a.qrcode_id = c.qrcode_id and date(a.scan_date) = '$scanDate' and c.floor_id = $floorId order by c.seat_name";
+			
+		}
 		$Dao = M();
 		$list = $Dao->query($sql);
 
@@ -108,7 +133,7 @@ class PostLoginController extends Controller {
 		import("Org.Util.PHPExcel.IOFactory.php");
 		import("Org.Util.PHPExcel.Writer.PDF");
 
-		$filename = "daily_report";
+		
 		$headArr = array (
 			"Seat Name",
 			"Building Name",
@@ -119,9 +144,9 @@ class PostLoginController extends Controller {
 			"Cost Centre",
 			"Date"
 		);
-		$this->getExcel($filename, $headArr, $list, $scanDate, $fileType);
+		$this->getExcel($filename, $reportTitle, $headArr, $list, $scanDate, $fileType);
 	}
-	private function getExcel($fileName, $headArr, $data, $reportDate, $fileType) {
+	private function getExcel($fileName, $reportTitle, $headArr, $data, $reportDate, $fileType) {
 		//对数据进行检验
 		if (empty ($data) || !is_array($data)) {
 			die("data must be a array");
@@ -138,7 +163,7 @@ class PostLoginController extends Controller {
 		$objPHPExcel = new \PHPExcel();
 		$objProps = $objPHPExcel->getProperties();
 
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', "Seat Monitor Daily Report")->setCellValue('A2', "Building Name")->setCellValue('C2', "MSD")->setCellValue('A3', "Floor")->setCellValue('C3', "MSD-F28")->setCellValue('A4', "Report Date")->setCellValue('C4', $reportDate);
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', $reportTitle)->setCellValue('A2', "Building Name")->setCellValue('C2', "MSD")->setCellValue('A3', "Floor")->setCellValue('C3', "MSD-F28")->setCellValue('A4', "Report Date")->setCellValue('C4', $reportDate);
 		$objActSheet = $objPHPExcel->getActiveSheet();
 		//设置表头
 		$key = ord("A");
