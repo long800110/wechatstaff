@@ -36,6 +36,9 @@ class IndexController extends Controller {
 	public function validateBind() {
 		$pwid = I("username");
 		$password = I("password");
+		$staffname = I("staffname");
+		$department = I("department");
+		$costcentre = I("costcentre");
 		$validateRes = true;
 		// PWID和密码的基本校验，如长度是否合法等
 		if (strlen($pwid) != 7 and is_numeric($pwid) and strlen($password) > 0) {
@@ -50,7 +53,16 @@ class IndexController extends Controller {
 		$criteria['pwid'] = $pwid;
 		$rs = $Staff->where($criteria)->find();
 		if (!$rs) {
-			$this->error("The Staff ID is not in the staff list, please contact system administrator.");
+			$data['pwid'] = $pwid;
+			$data['name'] = $staffname;
+			$data['department'] = $department;
+			$data['cost_centre'] = $costcentre;
+			$Staff->add($data);
+		}else{
+			$data['name'] = $staffname;
+			$data['department'] = $department;
+			$data['cost_centre'] = $costcentre;
+			$Staff->where($criteria)->data($data)->save();
 		}
 		//判断open_id是否已经在wechat_user表中
 		$openId = session('openId');

@@ -83,9 +83,23 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
                         <input id="password" name="password" type="password" class="form-control" placeholder="Password">
                     </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br>
 
-                    
+					<div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                        <input id="staffname" name="staffname" type="text" class="form-control" placeholder="Staff Name">
+                    </div>
+                    <div class="clearfix"></div><br>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                        <input id="department" name="department" type="text" class="form-control" placeholder="Department">
+                    </div>
+                    <div class="clearfix"></div><br>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                        <input id="costcentre" name="costcentre" type="text" class="form-control" placeholder="Cost Centre">
+                    </div>
+                    <div class="clearfix"></div>
                    
                     <p class="center col-md-5">
                         <button id="loginBtn" type="button" class="btn btn-primary">Login</button>
@@ -143,9 +157,16 @@ $(function(){
 $('#loginBtn').click(function() {
         var username = $("#username").val();
         var password = $("#password").val();
+        var staffname = $("#staffname").val();
+        var department = $("#department").val();
+        var costcentre = $("#costcentre").val();
+        
         $.post("validateBind", {
           'username' : username,
-          'password' : password
+          'password' : password,
+          'staffname' : staffname,
+          'department' : department,
+          'costcentre' : costcentre
         }, function(jsonData) {
         	var data = eval(jsonData);
             if (data.status == 1) {
@@ -153,10 +174,13 @@ $('#loginBtn').click(function() {
             	WeixinJSBridge.invoke('closeWindow',{},function(res){});
 
             } else {
-          	  $("#username").val('');
-          	  $("#password").val('');
-          	  $("#errMsg").html(data.info);
-          	  $("#errMsg").removeClass("hide");
+          	  	$("#username").val('');
+          	  	$("#password").val('');
+          		$("#staffname").val('');
+          		$("#department").val('');
+          		$("#costcentre").val('');
+          	 	$("#errMsg").html(data.info);
+          	  	$("#errMsg").removeClass("hide");
             }
         })
 });
